@@ -51,6 +51,11 @@ public:
     BracketMatchError();
 };
 
+class TermStructureError : public Exception {
+public:
+    TermStructureError();
+};
+
 class ExceptionHandler {
 public:
     static void log(Exception e);

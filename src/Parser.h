@@ -48,9 +48,9 @@ private:
     int current_position;
 
     SyntaxTreeNode *parse_expression();
-    SyntaxTreeNode *parse_as_expression(int l, int r);
-    SyntaxTreeNode *parse_term(int l, int r);
-    SyntaxTreeNode *parse_md_term();
+    // SyntaxTreeNode *parse_as_expression();
+    SyntaxTreeNode *parse_term();
+    // SyntaxTreeNode *parse_md_term();
     SyntaxTreeNode *parse_factor();
     SyntaxTreeNode *parse_number();
     SyntaxTreeNode *parse_identifier();
@@ -63,7 +63,19 @@ public:
     Parser(VectorStream token_stream_);
     ~Parser();
 
-    void parse();
+    void parse(VectorStream to_parse);
+
+    void get_preorder_traversal(
+        VectorStream &tar,
+        SyntaxTreeNode *root
+    );
+    void get_preorder_traversal(VectorStream &tar);
+
+    void get_inorder_traversal(
+        VectorStream &tar,
+        SyntaxTreeNode *root
+    );
+    void get_inorder_traversal(VectorStream &tar);
 };
 
 #endif

@@ -49,6 +49,16 @@ FactorStructureError::FactorStructureError() :
         )
     ) {}
 
+TermStructureError::TermStructureError() :
+    Exception(
+        string(
+            "Syntax error:\n"
+            "    The internal structure of the term is wrong.\n"
+            "    Each term should be the product of multiple factors.\n"
+            "    That is, [t  => f | f t', t' => * f t' | / f t' | eps]."
+        )
+    ) {}
+
 BracketMatchError::BracketMatchError() :
     Exception(
         string("Syntax error: bracket mismatch.")
