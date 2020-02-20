@@ -51,4 +51,10 @@ int main() {
         ExceptionHandler::log(e);
     }
 
+    try {
+        throw TermStructureError();
+    } catch (TermStructureError &e) {
+        ExceptionHandler::log(e);
+    }
+
 }
