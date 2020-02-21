@@ -1,7 +1,7 @@
 DIR_SRC = ./src
 DIR_BIN = ./bin
 
-CC = g++-7
+CC = g++-7 
 CFLAGS = -std=c++11
 
 TARGET = expression_interpreter
@@ -24,7 +24,7 @@ $(DIR_BIN)/Exception.o: ${DIR_SRC}/Exception.cc
 	$(CC) $(CFLAGS) -c $(DIR_SRC)/Exception.cc -o $(DIR_BIN)/Exception.o
 
 clean:
-	rm $(OBJECTS) $(DIR_BIN)/main.o $(BIN_TARGET)
+	rm $(OBJECTS) $(DIR_BIN)/main.o
 
 run:
 	./$(BIN_TARGET)
