@@ -27,12 +27,21 @@ int main() {
         TokenStream ts = TokenStream(s);
         ts.tokenize();
         auto v = ts.get_tokenized_vector();
-        reverse(v.begin(), v.end());
+        
         cout << "total token = " << v.size() << endl;
         for (Token e: v) {
             cout << e.to_string() << endl;
         }
         cout << endl;
+
+        /*
+        reverse(v.begin(), v.end());
+        for (auto &e: v) {
+            if (e.token_type == L_BRACKET) e = Token(R_BRACKET, string(")"));
+            else if (e.token_type == R_BRACKET) e = Token(L_BRACKET, string("("));
+        }
+        */
+
 
         cout << "Parse..." << endl;
         Parser psr;
