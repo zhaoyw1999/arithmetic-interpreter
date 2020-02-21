@@ -2,6 +2,10 @@
 
 This is a simple expression interpreter.
 
+
+![](./example.png)
+
+
 ## Build
 
 Use the command `make` to build and `make clean` to delete object files.
@@ -39,3 +43,4 @@ b = 514
 c = a * b - a / b
 ```
 
+Finally, you can input `$` to exit.
