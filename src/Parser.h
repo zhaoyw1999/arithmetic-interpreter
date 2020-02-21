@@ -57,13 +57,14 @@ private:
 
     bool is_assignment();
     void dfs_destroy(SyntaxTreeNode *root);
+    Integer dfs_calculate(SyntaxTreeNode *root);
 
 public:
     Parser();
     Parser(VectorStream token_stream_);
     ~Parser();
 
-    void parse(VectorStream to_parse);
+    void parse();
 
     void get_preorder_traversal(
         VectorStream &tar,
@@ -75,7 +76,10 @@ public:
         VectorStream &tar,
         SyntaxTreeNode *root
     );
+
     void get_inorder_traversal(VectorStream &tar);
+
+    std::pair <bool, Integer> calculate(VectorStream token_stream_);
 };
 
 #endif

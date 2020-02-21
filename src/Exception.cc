@@ -64,6 +64,16 @@ BracketMatchError::BracketMatchError() :
         string("Syntax error: bracket mismatch.")
     ) {}
 
+MissingElement::MissingElement() :
+    Exception(
+        string("Syntax error: Some elements of assignment statement are missing.")
+    ) {}
+
+AssignmentMalformed::AssignmentMalformed() :
+    Exception(
+        string("Syntax error: Malformed assignment statement.")
+    ) {}
+
 void ExceptionHandler::log(Exception e) {
     cout 
         << "\033[31m"

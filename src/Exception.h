@@ -56,6 +56,16 @@ public:
     TermStructureError();
 };
 
+class MissingElement : public Exception {
+public:
+    MissingElement();
+};
+
+class AssignmentMalformed : public Exception {
+public:
+    AssignmentMalformed();
+};
+
 class ExceptionHandler {
 public:
     static void log(Exception e);

@@ -110,7 +110,7 @@ SyntaxTreeNode *Parser::parse_term() {
         o = new SyntaxTreeNode(current_token);
         o->l_son = factor;
         ++this->current_position;
-        o->r_son = parse_term();
+        o->r_son = parse_factor();
         factor = o;
         if (this->current_position == this->token_stream.size()) break;
         current_token = this->token_stream.at(current_position);
@@ -138,7 +138,7 @@ SyntaxTreeNode *Parser::parse_expression() {
         o = new SyntaxTreeNode(current_token);
         o->l_son = term;
         ++this->current_position;
-        o->r_son = parse_expression();
+        o->r_son = parse_term();
         term = o;
         if (this->current_position == this->token_stream.size()) break;
         current_token = this->token_stream.at(current_position);
@@ -175,14 +175,83 @@ void Parser::get_inorder_traversal(VectorStream &tar) {
     get_inorder_traversal(tar, this->syntax_tree_root);
 }
 
-void Parser::parse(VectorStream to_parse) {
+void Parser::parse() {
     dfs_destroy(syntax_tree_root);
-    this->token_stream = to_parse;
     this->current_position = 0;
     syntax_tree_root = parse_expression();
 }
 
+bool Parser::is_assignment() {
+    for (auto e: this->token_stream) {
+        if (e.token_type == ASSIGNMENT) {
+            return true;
+        }
+    }
+    return false;
+}
 
+Integer Parser::dfs_calculate(SyntaxTreeNode *root) {
+    if (root == NULL) return Integer(0);
+    if (root->token.token_type == NUMBER) {
+        return Integer(std::stoll(root->token.token_value));
+    }
+    if (root->token.token_type == IDENTIFIER) {
+        if (
+            this->variable_map.find(root->token.token_value) == 
+            this->variable_map.end()
+        ) {
+            throw UndefinedIdentifier();
+        } else {
+            return Integer(this->variable_map[root->token.token_value]);
+        }
+    }
+    switch (root->token.token_type) {
+        case ADD: 
+            return dfs_calculate(root->l_son) + dfs_calculate(root->r_son);
+            break;
+        case SUB:
+            return dfs_calculate(root->l_son) - dfs_calculate(root->r_son);
+            break;
+        case  MUL:
+            return dfs_calculate(root->l_son) * dfs_calculate(root->r_son);
+            break;
+        case  DIV:
+            return dfs_calculate(root->l_son) / dfs_calculate(root->r_son);
+            break;
+        default:
+            break;
+    }
+}
+
+std::pair <bool, Integer> Parser::calculate(VectorStream token_stream_) {
+    this->token_stream = token_stream_;
+    if (is_assignment()) {
+        if (token_stream.size() < 3) {
+            throw MissingElement();
+        }
+        if (token_stream[0].token_type != IDENTIFIER) {
+            throw MissingIdentifier();
+        }
+        if (token_stream[1].token_type != ASSIGNMENT) {
+            throw AssignmentMalformed();
+        }
+
+        string var_id = token_stream[0].token_value;
+        for (size_t i = 2; i < token_stream.size(); ++i) {
+            token_stream[i - 2] = token_stream[i];
+        }
+        token_stream.pop_back();
+        token_stream.pop_back(); 
+        this->parse();
+        Integer res = this->dfs_calculate(syntax_tree_root);
+        variable_map[var_id] = res;
+        return {0, res};
+    } else {
+        this->parse();
+        Integer res = this->dfs_calculate(syntax_tree_root);
+        return {1, res};
+    }
+}
 
 
 
