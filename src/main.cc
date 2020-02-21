@@ -1,9 +1,7 @@
 #include "Tokenizer.h"
-#include "Tokenizer.cc"
 #include "Parser.h"
-#include "Parser.cc"
 #include "Exception.h"
-#include "Exception.cc"
+
 
 #include <iostream>
 
@@ -14,6 +12,7 @@ using std::endl;
 int main() {
     Parser parser;
     string user_input;
+    cout << "\033[34m" "[Expression Interpreter] by [Q17010123 YuweiZhao]" "\033[0m" " " << endl;
     while (true) {
         cout << "\033[34m" ">>>" "\033[0m" " ";
         getline(cin, user_input);
@@ -29,7 +28,9 @@ int main() {
         cout << endl;
         cout << "---tokenize---" << endl;
         cout << "size of token list = " << v.size() << endl;
+        for (auto t: v) cout << t.to_string() << endl;
         cout << endl;
+        
 
         cout << "---parse---" << endl;
         std::pair <bool, Integer> res;
