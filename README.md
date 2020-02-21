@@ -3,7 +3,7 @@
 This is a simple expression interpreter.
 
 
-![](./example.png)
+![](https://github.com/zhaoyw1999/arithmetic-interpreter/blob/master/example.png)
 
 
 ## Build
